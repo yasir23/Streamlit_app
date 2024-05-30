@@ -2,7 +2,7 @@ import os
 import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_community.embeddings import GPT4AllEmbeddings
+from langchain_community.embeddings import HuggingFaceInstructEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -22,7 +22,7 @@ groq_api_key = os.environ['GROQ_API_KEY']
 
 if "vector" not in st.session_state:
 
-    st.session_state.embeddings = GPT4AllEmbeddings(model_name = "all-MiniLM-L6-v2.gguf2.f16.gguf")
+    st.session_state.embeddings = HuggingFaceInstructEmbeddings(model_name = "hkunlp/instructor-large")
 
     st.session_state.loader = UnstructuredMarkdownLoader(markdown_path, mode="elements")
     st.session_state.docs = st.session_state.loader.load()
